@@ -16,10 +16,15 @@ P.S. due to the usage of WebCrypto API, hugo-encrypt only support secure content
 
     $ export HUGO_BLOG=/path/to/hugo/blog
 
-Place `shortcodes/encrypt.html` in the shortcode directory of your blog:
+Place `shortcodes/encrypt.html` and other helper shortcodes provided in the shortcode directory of your blog:
 
     $ mkdir -p $HUGO_BLOG/layouts/shortcodes
-    $ cp shortcodes/encrypt.html $HUGO_BLOG/layouts/shortcodes
+    $ cp shortcodes/encrypt.* $HUGO_BLOG/layouts/shortcodes
+
+Place required JavaScript `assets/js/decrypt.js` in the assets directory of you blog:
+
+    $ mkdir -p $HUGO_BLOG/assets/js/
+    $ cp assets/js/decrypt.js  $HUGO_BLOG/assets/js
 
 Merge i18n translation files or add it to an existing language file. Remember to set language in your [configuration](#configuration).
     
@@ -146,4 +151,5 @@ hugo --cleanDestinationDir
 hugo-encrypt
 ```
 
-- **To prevent the accidental leaking of sensitive data, pay attention to whether the theme you used will output a summary or full text on the article list page or RSS page. If so, try adding a `<!--more-->` comment before the content to be encrypted (before `{{% encrypt }}`).**
+- **To prevent the accidental leaking of sensitive data, pay attention to whether the theme you used will output a summary or full text on the RSS xml file and alike pages.**
+- **If so, check whether the encrypted content exists. In most cases, the content will be replaced by a single fixed sentence in these places.**
