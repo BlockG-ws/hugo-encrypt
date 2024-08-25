@@ -10,16 +10,16 @@ P.S. due to the usage of WebCrypto API, hugo-encrypt only support secure content
 
 2. [Configuration](#configuration)
 
-3. [Using the `{{% hugo-encrypt %}}` tag in your blog posts](#using-the--hugo-encrypt--tag-in-your-blog-posts)
+3. [Using the `{{% encrypt %}}` tag in your blog posts](#using-the--encrypt--tag-in-your-blog-posts)
 
 ### Installation and Usage
 
     $ export HUGO_BLOG=/path/to/hugo/blog
 
-Place `shortcodes/hugo-encrypt.html` in the shortcode directory of your blog:
+Place `shortcodes/encrypt.html` in the shortcode directory of your blog:
 
     $ mkdir -p $HUGO_BLOG/layouts/shortcodes
-    $ cp shortcodes/hugo-encrypt.html $HUGO_BLOG/layouts/shortcodes
+    $ cp shortcodes/encrypt.html $HUGO_BLOG/layouts/shortcodes
 
 Merge i18n translation files or add it to an existing language file. Remember to set language in your [configuration](#configuration).
     
@@ -28,7 +28,7 @@ Merge i18n translation files or add it to an existing language file. Remember to
 
 **Option A:** Use prebuilt binary
 
-- **For local usage:** Download [hugo-encrypt](https://github.com/Izumiko/hugo-encrypt/releases/latest) and run it
+- **For local usage:** Download [hugo-encrypt](https://github.com/BlockG-ws/hugo-encrypt/releases/latest) and run it
 
 		$ # If not in $PATH, add it first
 		$ export PATH=/path/to/hugo-encrypt:$PATH
@@ -38,7 +38,7 @@ Merge i18n translation files or add it to an existing language file. Remember to
 
 - **For CI/CD usage (Vercel etc.):** Customize install command and build command
 
-		Install command: curl -L -o hugo-encrypt "https://github.com/Izumiko/hugo-encrypt/releases/download/v0.1.0/hugo-encrypt-linux-64" && chmod 755 hugo-encrypt
+		Install command: curl -L -o hugo-encrypt "https://github.com/BlockG-ws/hugo-encrypt/releases/download/v0.1.0/hugo-encrypt-linux-64" && chmod 755 hugo-encrypt
 		
 		Build command: hugo -D --gc && ./hugo-encrypt
 
@@ -82,17 +82,19 @@ After generating the site with `hugo` and running `hugo-encrypt` all the private
 #### Setting a global password
 
 ```toml
-[params.HugoEncrypt]
-    Password = "yourpassword"
+# hugo.toml
+[params.encrypt]
+    password = "yourpassword"
 ```
 
 #### Password storage
 
-`hugo-encrypt` uses _localStorage_ by default. This means the passphrase is permanently stored in the browser. By adding the `hugoEncrypt.Storage` param in your blog's config file you can set the storage method to _sessionStorage_.
+`hugo-encrypt` uses _localStorage_ by default. This means the passphrase is permanently stored in the browser. By adding the `encrypt.storage` param in your blog's config file you can set the storage method to _sessionStorage_.
 
 ```toml
-[params.HugoEncrypt]
-    Storage = "session" # or "local"
+# hugo.toml
+[params.encrypt]
+    storage = "session" # or "local"
 ```
 
 **localStorage**:
@@ -103,7 +105,7 @@ Once a visitor entered the correct passphrase the authorization status will not 
 
 Once a visitor entered the correct passphrase the authorization will expire after the browser is closed.
 
-### Using the `{{% hugo-encrypt %}}` tag in your blog posts
+### Using the `{{% encrypt %}}` tag in your blog posts
 
 If no password is specified in the shortcode, the password set in your config file will be used. If no password is set at all, generation of html with `hugo` fails.
 
@@ -115,11 +117,11 @@ title: "This Is An Encrypted Post"
 
 This content is visible to anyone.
 
-{{% hugo-encrypt "postspecificpassword" %}}
+{{% encrypt "postspecificpassword" %}}
 
 This content will be encrypted!
 
-{{% /hugo-encrypt %}}
+{{% /encrypt %}}
 ```
 
 #### Language
@@ -144,4 +146,4 @@ hugo --cleanDestinationDir
 hugo-encrypt
 ```
 
-- **To prevent the accidental leaking of sensitive data, pay attention to whether the theme you used will output a summary or full text on the article list page or RSS page. If so, try adding a `<!--more-->` comment before the content to be encrypted (before `{{% hugo-encrypt }}`).**
+- **To prevent the accidental leaking of sensitive data, pay attention to whether the theme you used will output a summary or full text on the article list page or RSS page. If so, try adding a `<!--more-->` comment before the content to be encrypted (before `{{% encrypt }}`).**
