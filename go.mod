@@ -4,5 +4,5 @@ go 1.12
 
 require (
 	github.com/PuerkitoBio/goquery v1.9.2
-	golang.org/x/crypto v0.27.0
+	golang.org/x/crypto v0.28.0
 )
